@@ -60,48 +60,18 @@ LDFLAGS:= -static -Wl,--script=/home/sesc/sescutils/src/mint.x\
 #LIBS   := -lrt  -lm  -lpthread  
 app = combina_1
 LIBS   := -lm -lapp 
+TARGET1 = km_overhead
+TARGET2 = km_overhead_overhead
 
-combina_1:combina_1.c
-	$(CC) -O2 -c $< $(CFLAGS) 
-#	echo $$(subst %.c,%.o,combina_01.c)
-	$(CC) $(LDFLAGS) combina_1.o  -o $@ $(LIBS)
-	cp combina_1 /home/sesc/sesc-build-test2/
-combina_1_1:combina_1_1.c
-	$(CC) -O2 -c $< $(CFLAGS) 
-#	echo $$(subst %.c,%.o,combina_01.c)
-	$(CC) $(LDFLAGS) combina_1_1.o  -o $@ $(LIBS)
-	cp combina_1_1 /home/sesc/sesc-build-test2/
+all: $(TARGET1) $(TARGET2) 
 
+$(TARGET1):$(TARGET1).c
+	$(CC) -O2 -c $< $(CFLAGS)
+	$(CC)  $(LDFLAGS) $(TARGET1).o -o $@
 
-hellosesc:hellosesc.c
-	$(CC) -O2 -c $< $(CFL) 
-#	echo $$(subst %.c,%.o,combina_01.c)
-	$(CC) $(LDF) hellosesc.o  -o $@
-	cp hellosesc /home/sesc/sesc-build-test2/
+$(TARGET2):$(TARGET2).c
+	$(CC) -O2 -c $< $(CFLAGS)
+	$(CC)  $(LDFLAGS) $(TARGET2).o -o $@
 
-estimation_model:estimation_model.c
-	$(CC) -S $< 
-gensh:gensh.c
-	gcc $< -o $@
-	./gensh
-	chmod u+x run_combina.sh
-genMatlab:genMatlab.c
-	gcc $< -o $@
-	./genMatlab
-	
-testdfs_12:testdfs_12.c
-	gcc $< -o $@
-	cp testdfs_12 ./testfds2
-testdfs_12_op:testdfs_12_op.c
-	gcc $< -o $@
-	cp testdfs_12_op ./testfds2
-testdfs_11:testdfs_11.c
-	gcc $< -o $@
-	cp testdfs_11 ./testfds2
-testdfs_same:testdfs_same.c
-	gcc $< -o $@
-	cp testdfs_same ./testsame
 clean:
-		-@rm -f $(app)
-		-@rm -f *.o
-
+	rm $(TARGET1) $(TARGET2)  *.o
